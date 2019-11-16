@@ -1,2 +1,2 @@
 test:
-	cd exercises && yarn test -- $(NAME)
+	cd exercises && yarn test $(NAME)
