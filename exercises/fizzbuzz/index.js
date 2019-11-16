@@ -12,6 +12,24 @@
 //   4
 //   buzz
 
-function fizzBuzz(n) {}
+function fizzBuzz(n) {
+  if (typeof n !== "number") {
+    return;
+  }
+
+  for (let i = 1; i <= n; i++) {
+    const multipleOf3 = i % 3 === 0;
+    const multipleOf5 = i % 5 === 0;
+    let message =
+      multipleOf3 && multipleOf5
+        ? "fizzbuzz"
+        : multipleOf3
+        ? "fizz"
+        : multipleOf5
+        ? "buzz"
+        : i;
+    console.log(message);
+  }
+}
 
 module.exports = fizzBuzz;
