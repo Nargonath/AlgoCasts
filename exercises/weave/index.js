@@ -22,8 +22,34 @@
 //    q.remove() // 2
 //    q.remove() // 'There'
 
-const Queue = require('./queue');
+const Queue = require("./queue");
 
-function weave(sourceOne, sourceTwo) {}
+function isUndefined(element) {
+  return typeof element === "undefined";
+}
+
+function weave(sourceOne, sourceTwo) {
+  if (!(sourceOne instanceof Queue) || !(sourceTwo instanceof Queue)) {
+    throw new TypeError("arg should be an instance of Queue");
+  }
+
+  const queue = new Queue();
+  let nextSourceOne = sourceOne.peek();
+  let nextSourceTwo = sourceTwo.peek();
+  while (!isUndefined(nextSourceOne) || !isUndefined(nextSourceTwo)) {
+    if (!isUndefined(nextSourceOne)) {
+      queue.add(sourceOne.remove());
+    }
+
+    if (!isUndefined(nextSourceTwo)) {
+      queue.add(sourceTwo.remove());
+    }
+
+    nextSourceOne = sourceOne.peek();
+    nextSourceTwo = sourceTwo.peek();
+  }
+
+  return queue;
+}
 
 module.exports = weave;
