@@ -11,6 +11,30 @@
 //    list.insertLast('d');
 //    fromLast(list, 2).data // 'b'
 
-function fromLast(list, n) {}
+function fromLast(list, n) {
+  /* if (!(list instanceof LinkedList)) {
+    throw new TypeError("list argument should be a LinkedList");
+  } else */ if (
+    typeof n !== "number" ||
+    !Number.isInteger(n) ||
+    n < 0
+  ) {
+    throw new TypeError("space argument should be an integer >= 0");
+  }
+
+  let slow = list.head;
+  let fast = list.head;
+
+  for (let i = 0; i < n && fast; i++) {
+    fast = fast.next;
+  }
+
+  while (fast.next) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+
+  return slow;
+}
 
 module.exports = fromLast;
