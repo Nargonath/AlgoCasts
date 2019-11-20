@@ -100,6 +100,90 @@ class LinkedList {
     }
     return currentNode;
   }
+
+  removeAt(index) {
+    if (typeof index !== "number" || !Number.isInteger(index) || index < 0) {
+      throw new TypeError("index should be a positive integer");
+    }
+
+    if (!this.head) {
+      return;
+    } else if (index === 0) {
+      this.head = this.head.next;
+      return;
+    }
+
+    const previousNode = this.getAt(index - 1);
+    if (!previousNode || !previousNode.next) {
+      return;
+    }
+
+    const nodeToBeDeleted = previousNode.next;
+    previousNode.next = nodeToBeDeleted.next;
+  }
+
+  // first solution but brute force
+  // removeAt(index) {
+  //   if (typeof index !== "number" || !Number.isInteger(index) || index < 0) {
+  //     throw new TypeError("index should be a positive integer");
+  //   }
+
+  //   if (!this.head) {
+  //     return;
+  //   } else if (index === 0) {
+  //     this.head = this.head.next;
+  //     return;
+  //   }
+
+  //   let currentNode = this.head;
+  //   let previousNode = null;
+  //   let counter = 0;
+  //   while (currentNode && counter < index) {
+  //     previousNode = currentNode;
+  //     currentNode = currentNode.next;
+  //     counter++;
+  //   }
+
+  //   if (currentNode && previousNode) {
+  //     previousNode.next = currentNode.next;
+  //   }
+  // }
+
+  insertAt(data, index) {
+    if (typeof index !== "number" || !Number.isInteger(index) || index < 0) {
+      throw new TypeError("index should be a positive integer or 0");
+    }
+
+    if (!this.head || index === 0) {
+      this.head = new Node(data, this.head);
+      return;
+    }
+
+    const previousNode = this.getAt(index - 1) || this.getLast();
+    previousNode.next = new Node(data, previousNode.next);
+  }
+
+  forEach(fn) {
+    if (typeof fn !== "function") {
+      throw new TypeError("argument should be a function");
+    }
+
+    let currentNode = this.head;
+    let index = 0;
+    while (currentNode) {
+      fn(currentNode, index);
+      currentNode = currentNode.next;
+      index++;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node;
+      node = node.next;
+    }
+  }
 }
 
 module.exports = { Node, LinkedList };
